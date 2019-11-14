@@ -25,11 +25,13 @@ def weather():
 
 @app.route("/weather_results", methods=["GET"])
 def results():
+    """Display the temperature in a given city."""
     city = request.args.get("city")
-    weather_url = "http://api.openweathermap.org/data/2.5/weather?q="+str(city)+"&appid=2608f679d4594364525f6c6cc2246c79"
-    print("city test city test city test city test city test", str(city))
+    weather_url = "http://api.openweathermap.org/data/2.5/weather?"
+    params = {"q":str(city), "appid":"2608f679d4594364525f6c6cc2246c79"}
+    # print("city test city test city test city test city test", str(city))
     
-    response = requests.get(weather_url)
+    response = requests.get(weather_url, params=params)
     response_json = response.json()
     pp.pprint(response_json)
     main_data = response_json["main"]
