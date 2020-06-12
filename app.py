@@ -1,7 +1,12 @@
 from flask import Flask, render_template, request
 import requests
 import pprint
+import os
 
+from dotenv import load_dotenv
+load_dotenv()
+
+TENOR_API_KEY = os.getenv("TENOR_API_KEY")
 
 # Set up 'app' variable
 app = Flask(__name__)
@@ -28,7 +33,7 @@ def results():
     """Display the temperature in a given city."""
     city = request.args.get("city")
     weather_url = "http://api.openweathermap.org/data/2.5/weather?"
-    params = {"q":str(city), "appid":"2608f679d4594364525f6c6cc2246c79"}
+    params = {"q":str(city), "appid": TENOR_API_KEY}
     # print("city test city test city test city test city test", str(city))
     
     response = requests.get(weather_url, params=params)
@@ -42,8 +47,5 @@ def results():
     return render_template("/weather_results.html", city=city, temperature=int(temp_in_fahrenheit))
 
 
-
-
-
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')

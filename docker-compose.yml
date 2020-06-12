@@ -1,0 +1,7 @@
+version: '3'
+
+services:
+  plex:
+    image: linuxserver/plex
+      environment:
+        - env_var_name=${TENOR_API_KEY} # here it is
