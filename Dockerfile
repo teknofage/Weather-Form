@@ -1,10 +1,11 @@
 # STEP 1: Install base image. Optimized for Python.
 FROM python:3.7-slim-buster
 
+# STEP 1.5: Copy requirements.txt so we can install the versioned requirements.
+COPY requirements.txt .
+
 # STEP 2: Install required dependencies.
-RUN pip install Flask
-RUN pip install Flask Requests
-RUN pip install Flask-dotenv
+RUN pip install -r requirements.txt
 
 # STEP 3: Copy the source code in the current directory to the container.
 # Store it in a folder named /app.
@@ -21,29 +22,4 @@ ENV FLASK_ENV=development
 EXPOSE 5000
 
 # STEP 7: Run Flask!
-CMD ["flask", "run", "--host=0.0.0.0"]
-
-
-
-
-
-
-# FROM python:3.7-slim-buster
-
-# # add any other dependencies here 
-
-# ADD . /app
-
-# WORKDIR /app
-# RUN pip install Flask
-# RUN pip install Flask Requests
-# RUN pip install Dotenv
-
-# # declare environment variables
-# ENV FLASK_APP=app.py
-# ENV FLASK_ENV=development
-
-# EXPOSE 5000
-
-# #flask run command
-# CMD ["flask", "run", "--host=0.0.0.0"]
+CMD flask run --host=0.0.0.0
