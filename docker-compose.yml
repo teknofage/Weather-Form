@@ -1,7 +1,15 @@
-version: '3'
+version: '3.7'
 
 services:
-  plex:
-    image: linuxserver/plex
-      environment:
-        - env_var_name=${TENOR_API_KEY} # here it is
+  db:
+    image: mongo:3.0.2
+  web:
+    build: .
+    # The thing that changes the most often
+    command: flask run --host=0.0.0.0
+    volumes:
+      - .:/app
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
